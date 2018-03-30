@@ -13,7 +13,7 @@ namespace EFCache
         private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
         private readonly Dictionary<string, HashSet<string>> _entitySetToKey = new Dictionary<string, HashSet<string>>();
 
-        public bool GetItem(string key, out object value, DbConnection cn)
+        public bool GetItem(string key, out object value, DbInfo db)
         {
             if (key == null)
             {
@@ -31,7 +31,7 @@ namespace EFCache
                 {
                     if(EntryExpired(entry, now))
                     {
-                        InvalidateItem(key, cn);
+                        InvalidateItem(key, db);
                     }
                     else
                     {
@@ -46,7 +46,7 @@ namespace EFCache
         }
 
         public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets,
-            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbConnection cn)
+            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbInfo db)
         {
             if (key == null)
             {
@@ -79,7 +79,7 @@ namespace EFCache
             }
         }
 
-        public void InvalidateSets(IEnumerable<string> entitySets, DbConnection cn)
+        public void InvalidateSets(IEnumerable<string> entitySets, DbInfo db)
         {
             if (entitySets == null)
             {
@@ -104,12 +104,12 @@ namespace EFCache
 
                 foreach (var key in itemsToInvalidate)
                 {
-                    InvalidateItem(key, cn);
+                    InvalidateItem(key, db);
                 }
             }
         }
 
-        public void InvalidateItem(string key, DbConnection cn)
+        public void InvalidateItem(string key, DbInfo db)
         {
             if (key == null)
             {
@@ -136,7 +136,7 @@ namespace EFCache
             }
         }
 
-        public void Purge(DbConnection cn)
+        public void Purge(DbInfo db)
         {
             lock (_cache)
             {
@@ -153,7 +153,7 @@ namespace EFCache
 
                 foreach (var key in itemsToRemove)
                 {
-                    InvalidateItem(key, cn);
+                    InvalidateItem(key, db);
                 }
             }
         }

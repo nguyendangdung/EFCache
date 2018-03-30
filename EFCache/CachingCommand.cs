@@ -114,7 +114,7 @@ namespace EFCache
 
                 if (!CommandTreeFacts.IsQuery)
                 {
-                    CacheTransactionHandler.InvalidateSets(Transaction, CommandTreeFacts.AffectedEntitySets.Select(s => s.Name), Connection);
+                    CacheTransactionHandler.InvalidateSets(Transaction, CommandTreeFacts.AffectedEntitySets.Select(s => s.Name), Info);
                 }
 
                 return result;
@@ -122,7 +122,7 @@ namespace EFCache
 
             var key = CreateKey();
 
-            if (CacheTransactionHandler.GetItem(Transaction, key, Connection, out var value))
+            if (CacheTransactionHandler.GetItem(Transaction, key, Info, out var value))
             {
                 return new CachingReader((CachedResults)value);
             }
@@ -151,7 +151,7 @@ namespace EFCache
 
                 if (!CommandTreeFacts.IsQuery)
                 {
-                    CacheTransactionHandler.InvalidateSets(Transaction, CommandTreeFacts.AffectedEntitySets.Select(s => s.Name), Connection);
+                    CacheTransactionHandler.InvalidateSets(Transaction, CommandTreeFacts.AffectedEntitySets.Select(s => s.Name), Info);
                 }
 
                 return result;
@@ -159,7 +159,7 @@ namespace EFCache
 
             var key = CreateKey();
 
-            if (CacheTransactionHandler.GetItem(Transaction, key, Connection, out var value))
+            if (CacheTransactionHandler.GetItem(Transaction, key, Info, out var value))
             {
                 return new CachingReader((CachedResults)value);
             }
@@ -199,7 +199,7 @@ namespace EFCache
                     cachedResults,
                     CommandTreeFacts.AffectedEntitySets.Select(s => s.Name),
                     slidingExpiration,
-                    absoluteExpiration, Connection);
+                    absoluteExpiration, Info);
             }
 
             return new CachingReader(cachedResults);
@@ -250,7 +250,7 @@ namespace EFCache
         {
             if (recordsAffected > 0 && CommandTreeFacts.AffectedEntitySets.Any())
             {
-                CacheTransactionHandler.InvalidateSets(Transaction, CommandTreeFacts.AffectedEntitySets.Select(s => s.Name), Connection);
+                CacheTransactionHandler.InvalidateSets(Transaction, CommandTreeFacts.AffectedEntitySets.Select(s => s.Name), Info);
             }
         }
 
@@ -264,7 +264,7 @@ namespace EFCache
             var key = CreateKey();
 
 
-            if (CacheTransactionHandler.GetItem(Transaction, key, Connection, out object value))
+            if (CacheTransactionHandler.GetItem(Transaction, key, Info, out object value))
             {
                 return value;
             }
@@ -278,7 +278,7 @@ namespace EFCache
                 value,
                 CommandTreeFacts.AffectedEntitySets.Select(s => s.Name),
                 slidingExpiration,
-                absoluteExpiration, Connection);
+                absoluteExpiration, Info);
 
             return value;
         }
@@ -294,7 +294,7 @@ namespace EFCache
             var key = CreateKey();
 
 
-            if (CacheTransactionHandler.GetItem(Transaction, key, Connection, out object value))
+            if (CacheTransactionHandler.GetItem(Transaction, key, Info, out object value))
             {
                 return value;
             }
@@ -308,7 +308,7 @@ namespace EFCache
                 value,
                 CommandTreeFacts.AffectedEntitySets.Select(s => s.Name),
                 slidingExpiration,
-                absoluteExpiration, Connection);
+                absoluteExpiration, Info);
 
             return value;
         }

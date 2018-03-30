@@ -80,13 +80,13 @@ namespace EFCache
         private readonly Dictionary<string, List<string>> _setToCacheKey
             = new Dictionary<string, List<string>>();
 
-        public bool GetItem(string key, out object value, DbConnection cn)
+        public bool GetItem(string key, out object value, DbInfo db)
         {
             return CacheDictionary.TryGetValue(key, out value);
         }
 
         public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets,
-            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbConnection cn)
+            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbInfo db)
         {
             CacheDictionary[key] = value;
 
@@ -103,7 +103,7 @@ namespace EFCache
             }
         }
 
-        public void InvalidateSets(IEnumerable<string> entitySets, DbConnection cn)
+        public void InvalidateSets(IEnumerable<string> entitySets, DbInfo db)
         {
             foreach (var set in entitySets)
             {
@@ -120,7 +120,7 @@ namespace EFCache
             }
         }
 
-        public void InvalidateItem(string key, DbConnection cn)
+        public void InvalidateItem(string key, DbInfo db)
         {
             throw new NotImplementedException();
         }

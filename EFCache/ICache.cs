@@ -19,9 +19,9 @@ namespace EFCache
         /// </summary>
         /// <param name="key">The cache key.</param>
         /// <param name="value">The retrieved value.</param>
-        /// <param name="cn"></param>
+        /// <param name="db"></param>
         /// <returns>A value of <c>true</c> if entry was found in the cache, <c>false</c> otherwise.</returns>
-        bool GetItem(string key, out object value, DbConnection cn);
+        bool GetItem(string key, out object value, DbInfo db);
 
         /// <summary>
         /// Adds the specified entry to the cache.
@@ -31,22 +31,22 @@ namespace EFCache
         /// <param name="dependentEntitySets">The list of dependent entity sets.</param>
         /// <param name="slidingExpiration">The sliding expiration.</param>
         /// <param name="absoluteExpiration">The absolute expiration.</param>
-        /// <param name="cn"></param>
+        /// <param name="db"></param>
         void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration,
-            DateTimeOffset absoluteExpiration, DbConnection cn);
+            DateTimeOffset absoluteExpiration, DbInfo db);
 
         /// <summary>
         /// Invalidates all cache entries which are dependent on any of the specified entity sets.
         /// </summary>
         /// <param name="entitySets">The entity sets.</param>
-        /// <param name="cn"></param>
-        void InvalidateSets(IEnumerable<string> entitySets, DbConnection cn);
+        /// <param name="db"></param>
+        void InvalidateSets(IEnumerable<string> entitySets, DbInfo db);
 
         /// <summary>
         /// Invalidates cache entry with a given key.
         /// </summary>
         /// <param name="key">The cache key.</param>
-        /// <param name="cn"></param>
-        void InvalidateItem(string key, DbConnection cn);
+        /// <param name="db"></param>
+        void InvalidateItem(string key, DbInfo db);
     }
 }
