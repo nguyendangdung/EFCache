@@ -15,6 +15,7 @@ namespace EFCache
     internal class CachingCommand : DbCommand, ICloneable
     {
         private readonly CachingPolicy _cachingPolicy;
+        private Lazy<DbInfo> _dbInfo = new Lazy<DbInfo>();
 
         public CachingCommand(DbCommand command, CommandTreeFacts commandTreeFacts, CacheTransactionHandler cacheTransactionHandler, CachingPolicy cachingPolicy)
         {
