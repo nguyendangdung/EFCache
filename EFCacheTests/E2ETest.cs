@@ -83,7 +83,8 @@ namespace EFCache
             return CacheDictionary.TryGetValue(key, out value);
         }
 
-        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration)
+        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets,
+            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbInfo dbInfo)
         {
             CacheDictionary[key] = value;
 
@@ -160,7 +161,7 @@ namespace EFCache
         [Fact]
         public void Cache_cleared_on_implicit_transaction_commit()
         {
-            Cache.PutItem("s", new object(), new[] {"Item", "Entity"}, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] {"Item", "Entity"}, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {
@@ -176,7 +177,7 @@ namespace EFCache
         [Fact]
         public void Cache_cleared_on_explicit_transaction_commit()
         {
-            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {
@@ -202,7 +203,7 @@ namespace EFCache
         [Fact]
         public async Task Cache_cleared_on_explicit_transaction_commit_Async()
         {
-            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {
@@ -228,7 +229,7 @@ namespace EFCache
         [Fact]
         public void Cache_not_cleared_on_transaction_rollback()
         {
-            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {

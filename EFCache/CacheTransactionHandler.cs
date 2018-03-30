@@ -38,12 +38,13 @@ namespace EFCache
             return false;
         }
 
-        public virtual void PutItem(DbTransaction transaction, string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration,
-            DateTimeOffset absoluteExpiration)
+        public virtual void PutItem(DbTransaction transaction, string key, object value,
+            IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration,
+            DateTimeOffset absoluteExpiration, DbInfo dbInfo)
         {
             if (transaction == null)
             {
-                _cache.PutItem(key, value, dependentEntitySets, slidingExpiration, absoluteExpiration);
+                _cache.PutItem(key, value, dependentEntitySets, slidingExpiration, absoluteExpiration, dbInfo);
             }
         }
 

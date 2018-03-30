@@ -270,7 +270,7 @@ namespace EFCache
                     cachedResults,
                     _commandTreeFacts.AffectedEntitySets.Select(s => s.Name),
                     slidingExpiration,
-                    absoluteExpiration);
+                    absoluteExpiration, new DbInfo() {DbName = Connection.Database});
             }
 
             return new CachingReader(cachedResults);
@@ -353,7 +353,7 @@ namespace EFCache
                 value,
                 _commandTreeFacts.AffectedEntitySets.Select(s => s.Name),
                 slidingExpiration,
-                absoluteExpiration);
+                absoluteExpiration, new DbInfo() { DbName = Connection.Database });
 
             return value;
         }
@@ -387,7 +387,7 @@ namespace EFCache
                 value,
                 _commandTreeFacts.AffectedEntitySets.Select(s => s.Name),
                 slidingExpiration,
-                absoluteExpiration);
+                absoluteExpiration, new DbInfo() { DbName = Connection.Database });
 
             return value;
         }

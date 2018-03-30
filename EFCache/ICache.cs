@@ -28,7 +28,9 @@ namespace EFCache
         /// <param name="dependentEntitySets">The list of dependent entity sets.</param>
         /// <param name="slidingExpiration">The sliding expiration.</param>
         /// <param name="absoluteExpiration">The absolute expiration.</param>
-        void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration);
+        /// <param name="dbInfo"></param>
+        void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration,
+            DateTimeOffset absoluteExpiration, DbInfo dbInfo);
 
         /// <summary>
         /// Invalidates all cache entries which are dependent on any of the specified entity sets.

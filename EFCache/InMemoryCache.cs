@@ -43,7 +43,8 @@ namespace EFCache
             return false;
         }
 
-        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration)
+        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets,
+            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbInfo dbInfo)
         {
             if (key == null)
             {
