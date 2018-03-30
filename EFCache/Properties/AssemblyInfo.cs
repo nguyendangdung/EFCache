@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("EFCache")]
 [assembly: AssemblyDescription("2nd Level Cache for Entity Framework 6.1")]
-[assembly: AssemblyCompany("Pawel Kadluczka")]
+[assembly: AssemblyCompany("Dan Nguyen")]
 [assembly: AssemblyProduct("EFCache")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 
@@ -31,8 +31,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.1.0")]
-[assembly: AssemblyFileVersion("1.1.1.0")]
+[assembly: AssemblyVersion("2.1.1.0")]
+[assembly: AssemblyFileVersion("2.1.1.0")]
 
 #if INTERNALSVISIBLETOENABLED
 
