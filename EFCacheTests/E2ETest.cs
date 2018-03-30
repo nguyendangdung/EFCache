@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Pawel Kadluczka, Inc. All rights reserved. See License.txt in the project root for license information.
 
+using System.Data.Common;
+
 namespace EFCache
 {
     using System;
@@ -78,12 +80,13 @@ namespace EFCache
         private readonly Dictionary<string, List<string>> _setToCacheKey
             = new Dictionary<string, List<string>>();
 
-        public bool GetItem(string key, out object value)
+        public bool GetItem(string key, out object value, DbConnection cn)
         {
             return CacheDictionary.TryGetValue(key, out value);
         }
 
-        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration)
+        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets,
+            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbConnection cn)
         {
             CacheDictionary[key] = value;
 
@@ -100,7 +103,7 @@ namespace EFCache
             }
         }
 
-        public void InvalidateSets(IEnumerable<string> entitySets)
+        public void InvalidateSets(IEnumerable<string> entitySets, DbConnection cn)
         {
             foreach (var set in entitySets)
             {
@@ -117,7 +120,7 @@ namespace EFCache
             }
         }
 
-        public void InvalidateItem(string key)
+        public void InvalidateItem(string key, DbConnection cn)
         {
             throw new NotImplementedException();
         }
@@ -160,7 +163,7 @@ namespace EFCache
         [Fact]
         public void Cache_cleared_on_implicit_transaction_commit()
         {
-            Cache.PutItem("s", new object(), new[] {"Item", "Entity"}, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] {"Item", "Entity"}, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {
@@ -176,7 +179,7 @@ namespace EFCache
         [Fact]
         public void Cache_cleared_on_explicit_transaction_commit()
         {
-            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {
@@ -202,7 +205,7 @@ namespace EFCache
         [Fact]
         public async Task Cache_cleared_on_explicit_transaction_commit_Async()
         {
-            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {
@@ -228,7 +231,7 @@ namespace EFCache
         [Fact]
         public void Cache_not_cleared_on_transaction_rollback()
         {
-            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime());
+            Cache.PutItem("s", new object(), new[] { "Item", "Entity" }, new TimeSpan(), new DateTime(), null);
 
             using (var ctx = new MyContext())
             {

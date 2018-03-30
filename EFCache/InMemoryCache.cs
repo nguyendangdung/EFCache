@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Pawel Kadluczka, Inc. All rights reserved. See License.txt in the project root for license information.
 
+using System.Data.Common;
+
 namespace EFCache
 {
     using System;
@@ -11,7 +13,7 @@ namespace EFCache
         private readonly Dictionary<string, CacheEntry> _cache = new Dictionary<string, CacheEntry>();
         private readonly Dictionary<string, HashSet<string>> _entitySetToKey = new Dictionary<string, HashSet<string>>();
 
-        public bool GetItem(string key, out object value)
+        public bool GetItem(string key, out object value, DbConnection cn)
         {
             if (key == null)
             {
@@ -29,7 +31,7 @@ namespace EFCache
                 {
                     if(EntryExpired(entry, now))
                     {
-                        InvalidateItem(key);
+                        InvalidateItem(key, cn);
                     }
                     else
                     {
@@ -43,7 +45,8 @@ namespace EFCache
             return false;
         }
 
-        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration)
+        public void PutItem(string key, object value, IEnumerable<string> dependentEntitySets,
+            TimeSpan slidingExpiration, DateTimeOffset absoluteExpiration, DbConnection cn)
         {
             if (key == null)
             {
@@ -76,7 +79,7 @@ namespace EFCache
             }
         }
 
-        public void InvalidateSets(IEnumerable<string> entitySets)
+        public void InvalidateSets(IEnumerable<string> entitySets, DbConnection cn)
         {
             if (entitySets == null)
             {
@@ -101,12 +104,12 @@ namespace EFCache
 
                 foreach (var key in itemsToInvalidate)
                 {
-                    InvalidateItem(key);
+                    InvalidateItem(key, cn);
                 }
             }
         }
 
-        public void InvalidateItem(string key)
+        public void InvalidateItem(string key, DbConnection cn)
         {
             if (key == null)
             {
@@ -133,7 +136,7 @@ namespace EFCache
             }
         }
 
-        public void Purge()
+        public void Purge(DbConnection cn)
         {
             lock (_cache)
             {
@@ -150,7 +153,7 @@ namespace EFCache
 
                 foreach (var key in itemsToRemove)
                 {
-                    InvalidateItem(key);
+                    InvalidateItem(key, cn);
                 }
             }
         }

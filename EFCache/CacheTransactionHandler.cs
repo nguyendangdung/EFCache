@@ -26,11 +26,11 @@ namespace EFCache
             _cache = cache;
         }
 
-        public virtual bool GetItem(DbTransaction transaction, string key, out object value)
+        public virtual bool GetItem(DbTransaction transaction, string key, DbConnection cn, out object value)
         {
             if (transaction == null)
             {
-                return _cache.GetItem(key, out value);
+                return _cache.GetItem(key, out value, cn);
             }
 
             value = null;
@@ -38,20 +38,21 @@ namespace EFCache
             return false;
         }
 
-        public virtual void PutItem(DbTransaction transaction, string key, object value, IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration,
-            DateTimeOffset absoluteExpiration)
+        public virtual void PutItem(DbTransaction transaction, string key, object value,
+            IEnumerable<string> dependentEntitySets, TimeSpan slidingExpiration,
+            DateTimeOffset absoluteExpiration, DbConnection cn)
         {
             if (transaction == null)
             {
-                _cache.PutItem(key, value, dependentEntitySets, slidingExpiration, absoluteExpiration);
+                _cache.PutItem(key, value, dependentEntitySets, slidingExpiration, absoluteExpiration, cn);
             }
         }
 
-        public virtual void InvalidateSets(DbTransaction transaction, IEnumerable<string> entitySets)
+        public virtual void InvalidateSets(DbTransaction transaction, IEnumerable<string> entitySets, DbConnection cn)
         {
             if (transaction == null)
             {
-                _cache.InvalidateSets(entitySets);
+                _cache.InvalidateSets(entitySets, cn);
             }
             else
             {
@@ -90,7 +91,7 @@ namespace EFCache
 
             if (entitySets != null)
             {
-                _cache.InvalidateSets(entitySets.Distinct());
+                _cache.InvalidateSets(entitySets.Distinct(), transaction.Connection);
             }
         }
 
