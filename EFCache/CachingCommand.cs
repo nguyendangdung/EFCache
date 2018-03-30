@@ -15,7 +15,7 @@ namespace EFCache
     internal class CachingCommand : DbCommand, ICloneable
     {
         private readonly CachingPolicy _cachingPolicy;
-        private Lazy<DbInfo> _dbInfo = new Lazy<DbInfo>();
+        private DbInfo _dbInfo;
 
         public CachingCommand(DbCommand command, CommandTreeFacts commandTreeFacts, CacheTransactionHandler cacheTransactionHandler, CachingPolicy cachingPolicy)
         {
@@ -324,6 +324,8 @@ namespace EFCache
             get => WrappedCommand.UpdatedRowSource;
             set => WrappedCommand.UpdatedRowSource = value;
         }
+
+        public DbInfo Info => _dbInfo ?? (_dbInfo = Connection == null ? null : new DbInfo(Connection.Database));
 
         private string CreateKey()
         {
