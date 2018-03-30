@@ -59,9 +59,9 @@ namespace EFCache
             var dateTime = new DateTime(1499);
 
             new CacheTransactionHandler(mockCache.Object)
-                .PutItem(null, key, value, sets, timeSpan, dateTime, TODO);
+                .PutItem(null, key, value, sets, timeSpan, dateTime, null);
 
-            mockCache.Verify(c => c.PutItem(key, value, sets, timeSpan, dateTime, TODO), Times.Once());
+            mockCache.Verify(c => c.PutItem(key, value, sets, timeSpan, dateTime, null), Times.Once());
         }
 
         [Fact]
@@ -70,11 +70,11 @@ namespace EFCache
             var mockCache = new Mock<ICache>();
 
             new CacheTransactionHandler(mockCache.Object)
-                .PutItem(Mock.Of<DbTransaction>(), "key", new object(), new string[0], new TimeSpan(), new DateTime(), TODO);
+                .PutItem(Mock.Of<DbTransaction>(), "key", new object(), new string[0], new TimeSpan(), new DateTime(), null);
 
             mockCache.Verify(
                 c => c.PutItem(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<IEnumerable<string>>(),
-                    It.IsAny<TimeSpan>(), It.IsAny<DateTime>(), TODO), Times.Never());
+                    It.IsAny<TimeSpan>(), It.IsAny<DateTime>(), null), Times.Never());
         }
 
         [Fact]

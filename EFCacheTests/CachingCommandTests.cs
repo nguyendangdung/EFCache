@@ -399,7 +399,7 @@ namespace EFCache
                     It.Is<CachedResults>(r => r.Results.Count == 1 && r.RecordsAffected == 1 && r.TableMetadata.Length == 2),
                     It.Is<IEnumerable<string>>(es => es.SequenceEqual(new [] { "ES1", "ES2"})),
                     slidingExpiration,
-                    absoluteExpiration, TODO),
+                    absoluteExpiration, null),
                 Times.Once);
         }
 
@@ -435,7 +435,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
             }
         }
@@ -472,7 +472,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
             }
         }
@@ -521,7 +521,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
             }
         }
@@ -573,7 +573,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Once);
             }
         }
@@ -661,7 +661,7 @@ namespace EFCache
                     retValue,
                     new[] {"ES1", "ES2"},
                     slidingExpiration,
-                    absoluteExpiration, TODO),
+                    absoluteExpiration, null),
                     Times.Once);
         }
 
@@ -710,7 +710,7 @@ namespace EFCache
                     It.IsAny<object>(),
                     It.IsAny<IEnumerable<string>>(),
                     It.IsAny<TimeSpan>(),
-                    It.IsAny<DateTimeOffset>(), TODO),
+                    It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
         }
 
@@ -749,7 +749,7 @@ namespace EFCache
                     It.IsAny<object>(),
                     It.IsAny<IEnumerable<string>>(),
                     It.IsAny<TimeSpan>(),
-                    It.IsAny<DateTimeOffset>(), TODO),
+                    It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
         }
 
@@ -793,7 +793,7 @@ namespace EFCache
                     It.IsAny<object>(),
                     It.IsAny<IEnumerable<string>>(),
                     It.IsAny<TimeSpan>(),
-                    It.IsAny<DateTimeOffset>(), TODO),
+                    It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
         }
 
@@ -1166,7 +1166,7 @@ namespace EFCache
                         retValue,
                         new[] {"ES1", "ES2"},
                         slidingExpiration,
-                        absoluteExpiration, TODO),
+                        absoluteExpiration, null),
                     Times.Once);
             }
 
@@ -1215,7 +1215,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
             }
 
@@ -1254,7 +1254,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
             }
 
@@ -1298,7 +1298,7 @@ namespace EFCache
                         It.IsAny<object>(),
                         It.IsAny<IEnumerable<string>>(),
                         It.IsAny<TimeSpan>(),
-                        It.IsAny<DateTimeOffset>(), TODO),
+                        It.IsAny<DateTimeOffset>(), null),
                     Times.Never);
             }
 
@@ -1429,7 +1429,7 @@ namespace EFCache
                             r => r.Results.Count == 1 && r.RecordsAffected == 1 && r.TableMetadata.Length == 2),
                         It.Is<IEnumerable<string>>(es => es.SequenceEqual(new[] {"ES1", "ES2"})),
                         slidingExpiration,
-                        absoluteExpiration, TODO),
+                        absoluteExpiration, null),
                     Times.Once);
             }
 
@@ -1465,7 +1465,7 @@ namespace EFCache
                             It.IsAny<object>(),
                             It.IsAny<IEnumerable<string>>(),
                             It.IsAny<TimeSpan>(),
-                            It.IsAny<DateTimeOffset>(), TODO),
+                            It.IsAny<DateTimeOffset>(), null),
                         Times.Never);
                 }
             }
@@ -1502,7 +1502,7 @@ namespace EFCache
                             It.IsAny<object>(),
                             It.IsAny<IEnumerable<string>>(),
                             It.IsAny<TimeSpan>(),
-                            It.IsAny<DateTimeOffset>(), TODO),
+                            It.IsAny<DateTimeOffset>(), null),
                         Times.Never);
                 }
             }
@@ -1551,7 +1551,7 @@ namespace EFCache
                             It.IsAny<object>(),
                             It.IsAny<IEnumerable<string>>(),
                             It.IsAny<TimeSpan>(),
-                            It.IsAny<DateTimeOffset>(), TODO),
+                            It.IsAny<DateTimeOffset>(), null),
                         Times.Never);
                 }
             }
